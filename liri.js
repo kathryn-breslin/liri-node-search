@@ -33,7 +33,7 @@ switch (command) {
 }
 
 //Bands In Town API
-function concertThis() {
+function concertThis(searchValue) {
 
     //Calling the Bands In Town API
     var queryURL = "https://rest.bandsintown.com/artists/" + searchValue + "/events?app_id=codingbootcamp";
@@ -58,14 +58,59 @@ function concertThis() {
     )
 }
 
-function spotifyThis() {
+//Calling the Spotify API
+function spotifyThis(searchValue) {
+    spotify.search({
+        type: 'track', 
+        query: searchValue
+    }).then(function(response) {
+        // console.log(response.tracks.items);
+        var data = response.tracks.items;
 
+        //Looping through the response data
+        //console.logging to the terminal
+        for (var i = 0; i < data.length; i++) {
+            console.log("------------------------------------")
+            console.log("Artist: " + data[i].artists);
+            console.log("Song name: " + data[i].name);
+            console.log("Preview Song: " + data[i].preview_url);
+            console.log("Album: " + data[i].album.name);
+            console.log("------------------------------------")
+
+        }
+    })
 }
 
 function movieThis() {
 
 }
 
+//reading the random.txt file, calling the spotify API
 function doWhatItSays() {
+    fs.readFile('random.txt', 'utf8', function(error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        // console.log(data);
 
+        //splitting the data into an array
+        var dataArr = data.split(',');
+        console.log(dataArr)
+
+        //swtch statment to carry out the functions
+        switch(dataArr[0]) {
+            case "concert-this":
+                concertThis(dataArr[1]);
+                break;
+        
+            case "spotify-this-song":
+                spotifyThis(dataArr[1]);
+                break;
+        
+            case "movie-this":
+                movieThis(dataArr[1]);
+                break;
+        }
+
+    })
 }
