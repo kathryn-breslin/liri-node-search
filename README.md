@@ -5,12 +5,12 @@ LIRI is a Node-based search application! This app responds to command line argum
 This application uses a 'switch' statement to control when and how the functions are called. I've broken the application into 4 major functions, one for each of the API calls and one reads and responds to a specific file.
 
 ### Technologies
-Node.js
-Axios
-Moment.js
-Spotify API (https://developer.spotify.com/documentation/web-api/)
-OMDB API (http://www.omdbapi.com/)
-Bands In Town API (http://www.artists.bandsintown.com/bandsintown-api)
+* Node.js
+* Axios
+* Moment.js
+* Spotify API (https://developer.spotify.com/documentation/web-api/)
+* OMDB API (http://www.omdbapi.com/)
+* Bands In Town API (http://www.artists.bandsintown.com/bandsintown-api)
 
 ### Installation
 In order to run this application locally, you will need to install the following dependencies: 
