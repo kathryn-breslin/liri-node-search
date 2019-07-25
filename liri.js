@@ -20,7 +20,7 @@ switch (command) {
         break;
 
     case "spotify-this-song":
-        spotifyThis();
+        spotifyThis(searchValue);
         break;
 
     case "movie-this":
@@ -33,7 +33,7 @@ switch (command) {
 }
 
 //Bands In Town API
-function concertThis(searchValue) {
+function concertThis() {
 
     //Calling the Bands In Town API
     var queryURL = "https://rest.bandsintown.com/artists/" + searchValue + "/events?app_id=codingbootcamp";
@@ -81,8 +81,54 @@ function spotifyThis(searchValue) {
     })
 }
 
+//function to call OMDB api
 function movieThis() {
+    var queryUrl = "http://www.omdbapi.com/?t=" + searchValue+ "&y=&plot=short&apikey=trilogy";
+    console.log(queryUrl);
+    axios.get(queryUrl).then(
+        function(response) {
+            // console.log(response);
+            console.log("");
+            console.log("---------------------------------------")
+            console.log("Title: " + response.data.Title);
+            console.log("Year " + response.data.Year);
+            console.log("IMDB Rating: " + response.data.imdbRating);
+            console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
+            console.log("Country: " + response.data.Country);
+            console.log("Language: " + response.data.Language);
+            console.log("Plot: " + response.data.Plot);
+            console.log("---------------------------------------")
+            console.log("");
+        })
+        .catch(function(error) {
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.log("---------------Data---------------");
+              console.log(error.response.data);
+              console.log("---------------Status---------------");
+              console.log(error.response.status);
+              console.log("---------------Status---------------");
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              // `error.request` is an object that comes back with details pertaining to the error that occurred.
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Error", error.message);
+            }
+            console.log(error.config);
+          });
 
+    // * Title of the movie.
+    // * Year the movie came out.
+    // * IMDB Rating of the movie.
+    // * Rotten Tomatoes Rating of the movie.
+    // * Country where the movie was produced.
+    // * Language of the movie.
+    // * Plot of the movie.
+    // * Actors in the movie.
 }
 
 //reading the random.txt file, calling the spotify API
