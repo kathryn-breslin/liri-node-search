@@ -40,11 +40,11 @@ function concertThis() {
     // console.log(queryURL);
 
     axios.get(queryURL).then(
-        function(response) {
+        function (response) {
             // console.log(response)
 
             //Looping through BIT API response
-            for (var i = 0; i < response.data.length; i++){
+            for (var i = 0; i < response.data.length; i++) {
                 console.log("---------------Concerts-----------------")
                 console.log("Artist: " + searchValue);
                 console.log('');
@@ -61,9 +61,9 @@ function concertThis() {
 //Calling the Spotify API
 function spotifyThis(searchValue) {
     spotify.search({
-        type: 'track', 
+        type: 'track',
         query: searchValue
-    }).then(function(response) {
+    }).then(function (response) {
         // console.log(response.tracks.items);
         var data = response.tracks.items;
 
@@ -83,57 +83,49 @@ function spotifyThis(searchValue) {
 
 //function to call OMDB api
 function movieThis() {
-    var queryUrl = "http://www.omdbapi.com/?t=" + searchValue+ "&y=&plot=short&apikey=trilogy";
-    console.log(queryUrl);
-    axios.get(queryUrl).then(
-        function(response) {
-            // console.log(response);
-            console.log("");
-            console.log("---------------------------------------")
-            console.log("Title: " + response.data.Title);
-            console.log("Year " + response.data.Year);
-            console.log("IMDB Rating: " + response.data.imdbRating);
-            console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
-            console.log("Country: " + response.data.Country);
-            console.log("Language: " + response.data.Language);
-            console.log("Plot: " + response.data.Plot);
-            console.log("---------------------------------------")
-            console.log("");
-        })
-        .catch(function(error) {
-            if (error.response) {
-              // The request was made and the server responded with a status code
-              // that falls out of the range of 2xx
-              console.log("---------------Data---------------");
-              console.log(error.response.data);
-              console.log("---------------Status---------------");
-              console.log(error.response.status);
-              console.log("---------------Status---------------");
-              console.log(error.response.headers);
-            } else if (error.request) {
-              // The request was made but no response was received
-              // `error.request` is an object that comes back with details pertaining to the error that occurred.
-              console.log(error.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log("Error", error.message);
-            }
-            console.log(error.config);
-          });
-
-    // * Title of the movie.
-    // * Year the movie came out.
-    // * IMDB Rating of the movie.
-    // * Rotten Tomatoes Rating of the movie.
-    // * Country where the movie was produced.
-    // * Language of the movie.
-    // * Plot of the movie.
-    // * Actors in the movie.
+        
+    var queryUrl = "http://www.omdbapi.com/?t=" + searchValue + "&y=&plot=short&apikey=trilogy";
+        console.log(queryUrl);
+        axios.get(queryUrl).then(
+            function (response) {
+                // console.log(response);
+                console.log("");
+                console.log("---------------------------------------")
+                console.log("Title: " + response.data.Title);
+                console.log("Year " + response.data.Year);
+                console.log("IMDB Rating: " + response.data.imdbRating);
+                console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
+                console.log("Country: " + response.data.Country);
+                console.log("Language: " + response.data.Language);
+                console.log("Plot: " + response.data.Plot);
+                console.log("---------------------------------------")
+                console.log("");
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log("---------------Data---------------");
+                    console.log(error.response.data);
+                    console.log("---------------Status---------------");
+                    console.log(error.response.status);
+                    console.log("---------------Status---------------");
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an object that comes back with details pertaining to the error that occurred.
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log("Error", error.message);
+                }
+                console.log(error.config);
+            });
 }
 
 //reading the random.txt file, calling the spotify API
 function doWhatItSays() {
-    fs.readFile('random.txt', 'utf8', function(error, data) {
+    fs.readFile('random.txt', 'utf8', function (error, data) {
         if (error) {
             return console.log(error);
         }
@@ -144,15 +136,15 @@ function doWhatItSays() {
         console.log(dataArr)
 
         //swtch statment to carry out the functions
-        switch(dataArr[0]) {
+        switch (dataArr[0]) {
             case "concert-this":
                 concertThis(dataArr[1]);
                 break;
-        
+
             case "spotify-this-song":
                 spotifyThis(dataArr[1]);
                 break;
-        
+
             case "movie-this":
                 movieThis(dataArr[1]);
                 break;
