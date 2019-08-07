@@ -43,23 +43,30 @@ function concertThis() {
         function (response) {
             // console.log(response)
             //Looping through BIT API response
-            for (var i = 0; i < response.data.length; i++) {
-                console.log("---------------Concerts-----------------")
-                console.log("Artist: " + searchValue);
+            var data = response.data
+            if (!data.length) {
                 console.log('');
-                console.log("Name of Venue:" + response.data[i].venue.name)
-                console.log("Location: " + response.data[i].venue.city + ", " + response.data[i].venue.country);
-                console.log(moment(response.data[i].datetime).format("MM/DD/YYYY"));
+                console.log("There are no concerts for this artist. Please try another search!")
                 console.log('');
-                console.log("----------------------------------------")
+                return;
             }
-
+            
+                for (var i = 0; i < data.length; i++) {
+                    console.log("---------------Concerts-----------------")
+                    console.log("Artist: " + searchValue);
+                    console.log('');
+                    console.log("Name of Venue:" + data[i].venue.name)
+                    console.log("Location: " + data[i].venue.city + ", " + data[i].venue.country);
+                    console.log(moment(data[i].datetime).format("MM/DD/YYYY"));
+                    console.log('');
+                    console.log("----------------------------------------")
+                }
         })
 }
 
-var artistNames = function(artist) {
+var artistNames = function (artist) {
     return artist.name;
-  };
+};
 
 //Calling the Spotify API
 function spotifyThis(searchValue) {
