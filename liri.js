@@ -42,7 +42,6 @@ function concertThis() {
     axios.get(queryURL).then(
         function (response) {
             // console.log(response)
-
             //Looping through BIT API response
             for (var i = 0; i < response.data.length; i++) {
                 console.log("---------------Concerts-----------------")
@@ -54,24 +53,31 @@ function concertThis() {
                 console.log('');
                 console.log("----------------------------------------")
             }
-        }
-    )
+
+        })
 }
+
+var artistNames = function(artist) {
+    return artist.name;
+  };
 
 //Calling the Spotify API
 function spotifyThis(searchValue) {
+    if (!searchValue) {
+        searchValue = "Ace of Base"
+    }
     spotify.search({
         type: 'track',
         query: searchValue
     }).then(function (response) {
         // console.log(response.tracks.items);
         var data = response.tracks.items;
-
+        // console.log(data);
         //Looping through the response data
         //console.logging to the terminal
         for (var i = 0; i < data.length; i++) {
             console.log("------------------------------------")
-            console.log("Artist: " + data[i].artists);
+            console.log("Artist: " + data[i].artists.map(artistNames));
             console.log("Song name: " + data[i].name);
             console.log("Preview Song: " + data[i].preview_url);
             console.log("Album: " + data[i].album.name);
@@ -83,44 +89,46 @@ function spotifyThis(searchValue) {
 
 //function to call OMDB api
 function movieThis() {
-        
+    if (!searchValue) {
+        searchValue = "Mr Nobody";
+    }
     var queryUrl = "http://www.omdbapi.com/?t=" + searchValue + "&y=&plot=short&apikey=trilogy";
-        console.log(queryUrl);
-        axios.get(queryUrl).then(
-            function (response) {
-                // console.log(response);
-                console.log("");
-                console.log("---------------------------------------")
-                console.log("Title: " + response.data.Title);
-                console.log("Year " + response.data.Year);
-                console.log("IMDB Rating: " + response.data.imdbRating);
-                console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
-                console.log("Country: " + response.data.Country);
-                console.log("Language: " + response.data.Language);
-                console.log("Plot: " + response.data.Plot);
-                console.log("---------------------------------------")
-                console.log("");
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.log("---------------Data---------------");
-                    console.log(error.response.data);
-                    console.log("---------------Status---------------");
-                    console.log(error.response.status);
-                    console.log("---------------Status---------------");
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    // `error.request` is an object that comes back with details pertaining to the error that occurred.
-                    console.log(error.request);
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    console.log("Error", error.message);
-                }
-                console.log(error.config);
-            });
+    console.log(queryUrl);
+    axios.get(queryUrl).then(
+        function (response) {
+            // console.log(response);
+            console.log("");
+            console.log("---------------------------------------")
+            console.log("Title: " + response.data.Title);
+            console.log("Year " + response.data.Year);
+            console.log("IMDB Rating: " + response.data.imdbRating);
+            console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
+            console.log("Country: " + response.data.Country);
+            console.log("Language: " + response.data.Language);
+            console.log("Plot: " + response.data.Plot);
+            console.log("---------------------------------------")
+            console.log("");
+        })
+        .catch(function (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log("---------------Data---------------");
+                console.log(error.response.data);
+                console.log("---------------Status---------------");
+                console.log(error.response.status);
+                console.log("---------------Status---------------");
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an object that comes back with details pertaining to the error that occurred.
+                console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log("Error", error.message);
+            }
+            console.log(error.config);
+        });
 }
 
 //reading the random.txt file, calling the spotify API
@@ -129,7 +137,6 @@ function doWhatItSays() {
         if (error) {
             return console.log(error);
         }
-        // console.log(data);
 
         //splitting the data into an array
         var dataArr = data.split(',');
