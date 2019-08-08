@@ -24,7 +24,7 @@ switch (command) {
         break;
 
     case "movie-this":
-        movieThis();
+        movieThis(searchValue);
         break;
 
     case "do-what-it-says":
@@ -42,6 +42,7 @@ function concertThis() {
     axios.get(queryURL).then(
         function (response) {
             // console.log(response)
+            
             //Looping through BIT API response
             var data = response.data
             if (!data.length) {
@@ -95,7 +96,7 @@ function spotifyThis(searchValue) {
 }
 
 //function to call OMDB api
-function movieThis() {
+function movieThis(searchValue) {
     if (!searchValue) {
         searchValue = "Mr Nobody";
     }
